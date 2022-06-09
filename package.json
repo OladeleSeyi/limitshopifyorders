@@ -1,0 +1,111 @@
+{
+  "name": "shopify-app-typescript-boilerplate",
+  "version": "1.3.0",
+  "description": "Shopify app boilerplate with typescript.",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon --watch './server/**/*' -e ts,js --exec npx ts-node ./server",
+    "build": "NEXT_TELEMETRY_DISABLED=1 ./node_modules/.bin/next build && yarn tsc -b ./server",
+    "start": "cross-env NODE_ENV=production node ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x-buidl/shopify-app-typescript-boilerplate.git"
+  },
+  "author": "Shopify Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/0x-buidl/shopify-app-typescript-boilerplate.git"
+  },
+  "dependencies": {
+    "@babel/core": "7.12.10",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "@shopify/app-bridge-react": "^2.0.6",
+    "@shopify/app-bridge-utils": "^2.0.6",
+    "@shopify/graphql-testing": "^5.1.9",
+    "@shopify/jest-dom-mocks": "^4.0.0",
+    "@shopify/koa-shopify-auth": "^4.1.4",
+    "@shopify/polaris": "^6.2.0",
+    "@shopify/react-testing": "^3.3.10",
+    "apollo-boost": "^0.4.9",
+    "axios": "^0.25.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "isomorphic-fetch": "^3.0.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-combine-routers": "^4.0.2",
+    "koa-helmet": "^6.1.0",
+    "koa-router": "^10.0.0",
+    "koa-session": "^6.1.0",
+    "mongodb": "^4.3.1",
+    "mongoose": "^6.2.2",
+    "next": "^12.0.8",
+    "next-env": "^1.1.1",
+    "node-fetch": "^2.6.1",
+    "react": "^17.0.2",
+    "react-apollo": "^3.1.3",
+    "react-async": "^10.0.1",
+    "react-dom": "^17.0.2",
+    "webpack": "^4.44.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-stage-3": "^7.0.0",
+    "@testing-library/dom": "^8.13.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "12.1.2",
+    "@testing-library/user-event": "^14.2.0",
+    "@types/babel__core": "7.1.19",
+    "@types/babel__plugin-transform-runtime": "^7.9.2",
+    "@types/babel__preset-env": "^7.9.2",
+    "@types/copyfiles": "^2.4.1",
+    "@types/ejs": "^3.1.1",
+    "@types/enzyme": "3.10.12",
+    "@types/isomorphic-fetch": "^0.0.36",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.7",
+    "@types/koa-router": "^7.4.4",
+    "@types/koa-session": "^5.10.6",
+    "@types/node-fetch": "^2.6.1",
+    "@types/nodemon": "^1.19.1",
+    "@types/parse-numeric-range": "^0.0.1",
+    "@types/prettier": "2.2.1",
+    "@types/random-seed": "^0.3.3",
+    "@types/react": "^17.0.45",
+    "@types/react-addons-test-utils": "15.6.0",
+    "@types/react-dom": "^17.0.17",
+    "@types/react-test-renderer": "18.0.0",
+    "@types/testing-library__jest-dom": "^5.14.3",
+    "@types/url-parse": "^1.4.8",
+    "@types/webpack": "^5.28.0",
+    "babel-jest": "26.6.3",
+    "babel-register": "^6.26.0",
+    "eslint-plugin-jest-dom": "^4.0.1",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-shopify": "^35.1.0",
+    "eslint-plugin-testing-library": "^5.5.0",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.4",
+    "nodemon": "^2.0.7",
+    "prettier": "2.2.1",
+    "react-addons-test-utils": "15.6.2",
+    "react-test-renderer": "16.14.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": [
+      "prettier --write"
+    ]
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}

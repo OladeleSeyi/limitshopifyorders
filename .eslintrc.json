@@ -1,0 +1,24 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true,
+    "ecmaVersion": 2020
+  },
+
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "plugin:jest-dom/recommended",
+    "plugin:react/recommended"
+    // "plugin:shopify/react"
+    // "plugin:shopify/polaris"
+    // "plugin:shopify/webpack"
+  ],
+  "plugins": ["react", "jest-dom"],
+  "rules": {
+    "react/prop-types": 0
+  }
+}

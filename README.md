@@ -13,7 +13,11 @@ Boilerplate to create an embedded Shopify app made with [Node.js](https://nodejs
 Fork and clone this repository
 
 ```sh
-~/ $ git clone https://github.com/0x-buidl/shopify-app-typescript-boilerplate.git
+~/ $ git clone https://github.com/0x-buidl/shopify-app-boilerplate.git
+from root directory, run:
+~/ $ yarn install
+cd into web directory, run:
+~/ $ yarn install
 ```
 
 ## Requirements
@@ -24,30 +28,46 @@ Fork and clone this repository
 
 ## Usage
 
-development:
+### development:
 
-start your app with
+from the root directory start your app with
 
 ```sh
 ~/ $ yarn dev
+(shopify automatically starts an ngrok tunnel for your app)
 ```
 
-then connect ngrok to your development port
+#### OR
 
 ```sh
-~/ $ ngrok http <your port>
+start your ngrok tunnel manually (you must have ngrok installed):
+~/ $ ngrok http <your preffered port>
+
+then start app from
+1. root directory, run:
+~/ $ yarn dev --tunnel-url <your ngrok tunnel>:<your ngrok port>
+eg: yarn dev --tunnel-url https://awesome-ngrok-12345.com:4041
+
+2. web directory, run:
+~/ $ yarn dev
 ```
 
-build:
+### build:
+
+from root or web directory, run:
 
 ```sh
 ~/ $ yarn build
 ```
 
-production:
+### production:
+
+from web directory, run:
 
 ```sh
 ~/ $ yarn start
+
+OR build and start using included docker file.
 ```
 
 ## References
@@ -57,3 +77,7 @@ production:
 ## License
 
 This repository is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Author
+
+[Lanre Popson](https://github.com/0x-buidl)

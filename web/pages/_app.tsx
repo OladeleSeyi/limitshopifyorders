@@ -3,12 +3,13 @@ import React from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import App, { AppContext } from "next/app";
+import getConfig from "next/config";
 import { AppProvider } from "@shopify/polaris";
 import { Provider, useAppBridge } from "@shopify/app-bridge-react";
 import { authenticatedFetch } from "@shopify/app-bridge-utils";
 import { Redirect } from "@shopify/app-bridge/actions";
 import { Response } from "node-fetch";
-import "@shopify/polaris/dist/styles.css";
+import "@shopify/polaris/build/esm/styles.css";
 import translations from "@shopify/polaris/locales/en.json";
 
 function userLoggedInFetch(app: any) {
@@ -35,9 +36,10 @@ function userLoggedInFetch(app: any) {
   };
 }
 
-function MyProvider(props) {
+function MyProvider(props: any) {
   const app = useAppBridge();
   const fetch = userLoggedInFetch(app);
+
   const client = new ApolloClient({
     fetch,
     fetchOptions: {
@@ -53,7 +55,7 @@ function MyProvider(props) {
     </ApolloProvider>
   );
 }
-
+const { publicRuntimeConfig } = getConfig();
 class MyApp extends App {
   render() {
     const { Component, pageProps, host } = this.props;
@@ -61,7 +63,7 @@ class MyApp extends App {
       <AppProvider i18n={translations}>
         <Provider
           config={{
-            apiKey: API_KEY,
+            apiKey: publicRuntimeConfig.API_KEY,
             host: host,
             forceRedirect: false,
           }}

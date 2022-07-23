@@ -1,5 +1,5 @@
 language: node_js
 script:
-  - npm run build
+  - yarn build
 node_js:
-  - '10'
+  - "14"

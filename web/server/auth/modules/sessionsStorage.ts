@@ -29,8 +29,6 @@ export const loadCallback = async (id: string) => {
     if (!res) {
       return undefined;
     }
-
-    const session = new Session(res.id);
     const {
       shop,
       state,
@@ -40,12 +38,10 @@ export const loadCallback = async (id: string) => {
       expires,
       onlineAccessInfo,
     } = res.payload;
+    const session = new Session(res.id, shop, state, isOnline);
 
-    session.shop = shop;
-    session.state = state;
     session.scope = scope;
     session.accessToken = accessToken;
-    session.isOnline = isOnline;
     session.expires = expires;
     session.onlineAccessInfo = onlineAccessInfo;
     return session;

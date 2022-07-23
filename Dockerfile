@@ -1,12 +1,26 @@
-FROM node:14 AS base
-ENV NODE_ENV=production
+###############
+# build stage #
+###############
+FROM node:14 as build
+WORKDIR /build
+COPY web/package.json web/yarn.lock ./
+RUN yarn install
+COPY web .
+RUN yarn build
+
+
+###############
+# final stage #
+###############
+FROM node:14
 WORKDIR /usr/src/app
-COPY ["package.json", "yarn.lock", "./"]
-RUN yarn install 
-# && mv node_modules ../
-COPY . .
+ENV NODE_ENV=production
+COPY web/package.json web/yarn.lock ./
+RUN yarn install
+# copy build files
+COPY --from=build /build/dist dist
+COPY --from=build /build/.next .next
 EXPOSE 8081
 RUN chown -R node /usr/src/app
 USER node
-RUN yarn build 
 CMD ["yarn", "start"]

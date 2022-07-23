@@ -18,9 +18,7 @@ import { webhookRoutes, nextRoutes } from "./routers";
 // ------------ INITIATING APP  ------------
 dotenv.config();
 const port = process.env.PORT || 8000;
-const uri = process.env
-  .MONGODB_URL!.replace("<USER>", process.env.MONGODB_USER!)
-  .replace("<PASSWORD>", process.env.MONGODB_PWD!);
+const uri = process.env.MONGODB_URL!;
 
 mongoose
   .connect(uri)

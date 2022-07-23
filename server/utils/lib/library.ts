@@ -2,11 +2,12 @@ import { Context } from "koa";
 import crypto from "crypto";
 import axios from "axios";
 
-import { WebhookDb } from "../database";
+import { WebhookDb } from "../../database";
+import { VERSION } from "../../constants";
 
-export const getShopifyClient = ({ shop, token, version }) =>
+export const getShopifyClient = (shop: string, token: string) =>
   axios.create({
-    baseURL: `https://${shop}/admin/api/${version}`,
+    baseURL: `https://${shop}/admin/api/${VERSION}`,
     headers: {
       "Content-Type": "application/json",
       "X-Shopify-Access-Token": token,
@@ -29,7 +30,7 @@ export const handleShopifyGQLError = (error) => {
   throw new Error(message);
 };
 
-export const validateMerchantRequest = (ctx: Context) => {
+export const validateNextRequest = (ctx: Context) => {
   let queryStr = ctx.request.header.referer?.split("?")[1];
   if (!queryStr) queryStr = ctx.querystring;
 

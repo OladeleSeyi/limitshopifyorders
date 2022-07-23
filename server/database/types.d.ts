@@ -1,3 +1,4 @@
+
 export interface ISessionModel {
   id: string;
   payload: {
@@ -17,10 +18,8 @@ export interface IUserModel {
   scope: string;
   name: string;
   updated_at: Date;
-  uninstalled: boolean;
-  theme_status: "none" | "automatic" | "app_block";
   deleted: boolean;
-  user_info: any;
+  user_info: UserInfo;
 }
 
 export interface IWebhookModel {
@@ -30,3 +29,22 @@ export interface IWebhookModel {
   payload: any;
   time_received: Date;
 }
+
+export type UserInfo = {
+  email: string;
+  checkoutApiSupported: boolean;
+  currencyCode: string;
+  currencyFormats: {
+    moneyFormat: string;
+    moneyWithCurrencyFormat: string;
+  };
+  customerAccounts: "DISABLED" | "OPTIONAL" | "REQUIRED";
+  id: string;
+  name: string;
+  plan: {
+    displayName: string;
+    partnerDevelopment: boolean;
+    shopifyPlus: boolean;
+  };
+  url: string;
+};

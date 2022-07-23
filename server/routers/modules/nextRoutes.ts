@@ -3,7 +3,7 @@ import combineRouters from "koa-combine-routers";
 import {
   handleRequest,
   generalNextController,
-} from "../controllers/nextControllers";
+} from "../../controllers";
 const router = new Router();
 
 router

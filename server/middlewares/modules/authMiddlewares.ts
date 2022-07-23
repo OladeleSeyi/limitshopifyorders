@@ -1,8 +1,9 @@
 import { Context, Next } from "koa";
 import helmet from "koa-helmet";
-import { createUser } from "../auth";
-import { getUserShopifyInfo } from "../auth";
-import { registerWebhook } from "../app";
+import { createUser } from "../../auth";
+import { getUserShopifyInfo } from "../../auth";
+import { registerWebhook } from "../../app";
+import { validateWebhookRequest, AppError } from "../../utils";
 
 export const contentSecHeader = (ctx: Context, next: Next) => {
   // Cookie is set after auth
@@ -38,7 +39,7 @@ export const afterAuth = async (ctx: Context) => {
   const token = accessToken;
   const userinfo = await getUserShopifyInfo(shop, token);
   //  creates a user after installation
-  await createUser({ shop, scope, name: userinfo.name, info: userinfo });
+  await createUser(shop, scope, userinfo.name, userinfo);
 
   // register app/uninstalled webhook
   await registerWebhook({
@@ -51,4 +52,18 @@ export const afterAuth = async (ctx: Context) => {
 
   // Redirect to app with shop parameter upon auth
   ctx.redirect(`https://${shop}/admin/apps/your-awesome-shopify-app-name`);
+};
+
+export const authenticateWebhook = async (ctx: Context, next: Next) => {
+  const { body } = ctx.request;
+  const { rawBody } = ctx.request;
+  const shop = ctx.headers["x-shopify-shop-domain"];
+  const topic = ctx.headers["x-shopify-topic"];
+  const id = ctx.headers["x-shopify-webhook-id"];
+  const hmac = ctx.headers["x-shopify-hmac-sha256"];
+  const auth = validateWebhookRequest(hmac, rawBody);
+  if (!auth) throw new AppError("Unauthorized app usage.", 401);
+
+  ctx.state = { shop, topic, id, payload: body };
+  return next();
 };

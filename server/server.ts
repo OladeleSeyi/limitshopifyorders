@@ -10,11 +10,10 @@ import mongoose from "mongoose";
 
 // ------------ Shopthru Module Imports ------------
 import { storeCallback, loadCallback, deleteCallback } from "./auth";
-import { afterAuth, contentSecHeader } from "./controllers/authControllers";
-import { nextApp as app } from "./controllers/nextControllers";
-import { globaErrorHandler } from "./controllers/errorController";
-import webhookRoutes from "./routers/webhookRoutes";
-import nextRoutes from "./routers/nextRoutes";
+import { afterAuth, contentSecHeader } from "./middlewares";
+import { nextApp as app } from "./controllers";
+import { globaErrorHandler } from "./controllers";
+import { webhookRoutes, nextRoutes } from "./routers";
 
 // ------------ INITIATING APP  ------------
 dotenv.config();

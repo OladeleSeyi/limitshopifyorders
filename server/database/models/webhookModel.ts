@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IWebhookModel } from "../../utils/types/modelTypes";
+import { IWebhookModel } from "../types";
 
 const Schema = mongoose.Schema;
 

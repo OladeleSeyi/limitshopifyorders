@@ -1,3 +1,1 @@
-import { registerWebhook, deleteWebhook } from "./hooks/webhook";
-
-export { registerWebhook, deleteWebhook };
+export { registerWebhook, deleteWebhook } from "./hooks/webhook";

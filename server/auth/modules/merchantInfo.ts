@@ -1,13 +1,11 @@
-import { getShopifyClient } from "../../utils/library";
-
-interface IMerchantInfo {
-  fetch(shop: string, token: string): Promise<any>;
-}
+import { getShopifyClient } from "../../utils/lib/library";
+import { UserInfo } from "../../database/types";
+import { IMerchantInfo } from "../types";
 
 class MerchantInfo implements IMerchantInfo {
   constructor() {}
-  async fetch(shop: string, token: string) {
-    const Client = getShopifyClient({ shop, token, version: "2022-04" });
+  async fetch(shop: string, token: string): Promise<UserInfo> {
+    const Client = getShopifyClient(shop, token);
     const query = `
       query {
         shop {

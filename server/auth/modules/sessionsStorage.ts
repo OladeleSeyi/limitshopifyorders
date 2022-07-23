@@ -1,6 +1,7 @@
 import { Session } from "@shopify/shopify-api/dist/auth/session";
 import SessionDB from "../../database/models/sessionModel";
 import UserDB from "../../database/models/userModel";
+import { UserInfo } from "../../database/types";
 
 export const storeCallback = async function storeCallback(session: Session) {
   try {
@@ -55,14 +56,19 @@ export const loadCallback = async (id: string) => {
 
 export const deleteCallback = async function deleteCallback(id) {
   try {
-    await SessionDB.deleteOne({ id: id });
+    await SessionDB.deleteMany({ id: id });
     return true;
   } catch (error) {
     throw error;
   }
 };
 
-export const createUser = async function addUser({ shop, scope, name, info }) {
+export const createUser = async function addUser(
+  shop: string,
+  scope: string,
+  name: string,
+  info: UserInfo
+) {
   try {
     await UserDB.findOneAndUpdate(
       { shop: shop },
@@ -72,7 +78,6 @@ export const createUser = async function addUser({ shop, scope, name, info }) {
           scope,
           name,
           user_info: info,
-          uninstalled: true,
           deleted: false,
           updated_at: Date.now(),
         },
@@ -110,7 +115,7 @@ export const getUserAccessToken = async function findToken(shop) {
   try {
     const res = await SessionDB.findOne({
       shop: shop,
-    })
+    });
 
     if (res?.payload?.accessToken) {
       return res.payload.accessToken;

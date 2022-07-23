@@ -1,4 +1,4 @@
-import {
+export {
   storeCallback,
   loadCallback,
   deleteCallback,
@@ -7,15 +7,4 @@ import {
   removeSession,
   getUserAccessToken,
 } from "./modules/sessionsStorage";
-import { getUserShopifyInfo } from "./modules/merchantInfo";
-
-export {
-  storeCallback,
-  loadCallback,
-  deleteCallback,
-  createUser,
-  updateUser,
-  removeSession,
-  getUserShopifyInfo,
-  getUserAccessToken,
-};
+export { getUserShopifyInfo } from "./modules/merchantInfo";

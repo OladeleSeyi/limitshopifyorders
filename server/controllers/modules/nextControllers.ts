@@ -1,8 +1,8 @@
 import { Context } from "koa";
 import next from "next";
-import AppError from "../utils/appError";
-import { getUserAccessToken } from "../auth";
-import { validateMerchantRequest } from "../utils/library";
+import AppError from "../../utils/lib/appError";
+import { getUserAccessToken } from "../../auth";
+import { validateNextRequest } from "../../utils/lib/library";
 
 const dev = process.env.NODE_ENV !== "production";
 export const nextApp = next({
@@ -27,7 +27,7 @@ export const generalNextController = async (ctx: Context) => {
   if (!checkSession) {
     ctx.redirect(`/auth?shop=${shop}`);
   } else {
-    const auth = validateMerchantRequest(ctx);
+    const auth = validateNextRequest(ctx);
     if (!auth.authorized) return ctx.redirect(`/auth?shop=${shop}`);
     await handleRequest(ctx);
   }

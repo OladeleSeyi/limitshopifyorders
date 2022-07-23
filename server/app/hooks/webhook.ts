@@ -1,30 +1,6 @@
 import { AxiosInstance } from "axios";
-import { getShopifyClient, handleShopifyGQLError } from "../../utils/library";
-
-interface IWebhook {
-  register({
-    shop,
-    token,
-    HOST,
-    endpoint,
-    topic,
-  }: {
-    shop: string;
-    token: string;
-    HOST: string;
-    endpoint: string;
-    topic: string;
-  }): Promise<void>;
-  deleteAll({
-    shop,
-    token,
-    topic,
-  }: {
-    shop: string;
-    token: string;
-    topic: string;
-  }): Promise<void>;
-}
+import { getShopifyClient, handleShopifyGQLError } from "../../utils";
+import { IWebhook } from "../types";
 
 class Webhook implements IWebhook {
   constructor() {}
@@ -126,7 +102,7 @@ class Webhook implements IWebhook {
   }
   async register({ shop, token, HOST, endpoint, topic }) {
     try {
-      const Client = getShopifyClient({ shop, token, version: "2022-04" });
+      const Client = getShopifyClient(shop, token);
       const webhooks = await this._getWebhooks({ Client, topic });
       const url = `${HOST}/webhooks/${endpoint}`;
       const exists = webhooks.some(
@@ -149,7 +125,7 @@ class Webhook implements IWebhook {
   }
   async deleteAll({ shop, token, topic }) {
     try {
-      const Client = getShopifyClient({ shop, token, version: "2022-04" });
+      const Client = getShopifyClient(shop, token);
       const webhooks = await this._getWebhooks({ Client, topic });
       if (webhooks.length) {
         for (const webhook of webhooks) {

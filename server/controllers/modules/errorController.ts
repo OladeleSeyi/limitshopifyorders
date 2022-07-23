@@ -1,6 +1,6 @@
 import { Context, Next } from "koa";
 import { Error as mongooseError } from "mongoose";
-import AppError from "../utils/appError";
+import AppError from "../../utils/lib/appError";
 
 const handleCastErrorDB = (err: mongooseError.CastError) => {
   const message = `Invalid ${err.path}: ${JSON.stringify(err.value)}.`;

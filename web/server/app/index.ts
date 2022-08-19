@@ -1,1 +1,1 @@
-export { registerWebhook, deleteWebhook } from "./hooks/webhook";
+export { default as Webhook } from "./hooks/webhook";

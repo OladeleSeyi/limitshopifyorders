@@ -61,3 +61,38 @@ export const validateWebhookRequest = (hmac, body) => {
     .digest("base64");
   return digest === hmac;
 };
+
+export const validateSession = (
+  session: {
+    iss: string;
+    dest: string;
+    aud: string;
+    sub: string;
+    exp: number;
+    nbf: number;
+    iat: number;
+    jti: string;
+    sid: string;
+  },
+  jwt: string
+) => {
+  const issuer = session.iss.replace("https://", "").split("/")[0];
+  const shop = session.dest.replace("https://", "");
+  let components = jwt.split(".");
+  const message = `${components[0]}.${components[1]}`;
+  const signature = components[2];
+  const digest = crypto
+    .createHmac("sha256", process.env.SHOPIFY_API_SECRET!)
+    .update(message)
+    .digest("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=/g, "");
+  if (new Date(session.exp * 1000).getTime() < new Date().getTime())
+    return false;
+  if (new Date(session.nbf * 1000).getTime() > new Date().getTime())
+    return false;
+  if (issuer !== shop) return false;
+  if (session.aud !== process.env.SHOPIFY_API_KEY!) return false;
+  return digest === signature;
+};

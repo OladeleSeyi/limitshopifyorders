@@ -5,7 +5,15 @@ const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({
   id: String,
-  payload: Object,
+  payload: new Schema({
+    shop: String,
+    state: String,
+    scope: String,
+    accessToken: String,
+    isOnline: Boolean,
+    expires: Schema.Types.Mixed,
+    onlineAccessInfo: Schema.Types.Mixed,
+  }),
   shop: String,
 });
 

@@ -1,3 +1,5 @@
-export interface IMerchantInfo {
-  fetch(shop: string, token: string): Promise<UserInfo>;
+import { UserInfo } from "../database/types";
+export interface IMerchantInformation {
+  shop: string;
+  fetch(): Promise<UserInfo>;
 }

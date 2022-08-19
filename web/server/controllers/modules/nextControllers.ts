@@ -12,7 +12,6 @@ export const nextApp = next({
 const handle = nextApp.getRequestHandler();
 
 export const handleRequest = async (ctx: Context) => {
-  // @ts-ignore
   await handle(ctx.req, ctx.res);
   ctx.respond = false;
   ctx.res.statusCode = 200;

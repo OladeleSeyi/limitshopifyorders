@@ -1,15 +1,28 @@
-import { getShopifyClient } from "../../utils/lib/library";
+import { AxiosInstance } from "axios";
+import { getShopifyClient } from "../../utils";
 import { UserInfo } from "../../database/types";
-import { IMerchantInfo } from "../types";
+import { IMerchantInformation } from "../types";
 
-class MerchantInfo implements IMerchantInfo {
-  constructor() {}
-  async fetch(shop: string, token: string): Promise<UserInfo> {
-    const Client = getShopifyClient(shop, token);
+/**
+ * @class Gets a merchant/shop information from shopify, read https://shopify.dev/api/admin-graphql/2022-07/objects/Shop
+ * @param {string} _shop - Shopify store identifier for a merchant /^[a-zA-Z0-9][a-zA-Z0-9\-]*.myshopify.com/
+ * @param {string} _token -  access token for the shop
+ */
+class MerchantInformation implements IMerchantInformation {
+  shop: string;
+  private _client: AxiosInstance;
+  constructor(_shop: string, _token: string) {
+    this.shop = _shop;
+    this._client = getShopifyClient(_shop, _token);
+  }
+  async fetch(): Promise<UserInfo> {
     const query = `
       query {
         shop {
-          email
+          billingAddress {
+            country
+          }
+          contactEmail
           checkoutApiSupported
           currencyCode
           currencyFormats {
@@ -17,6 +30,19 @@ class MerchantInfo implements IMerchantInfo {
             moneyWithCurrencyFormat
           }
           customerAccounts
+          domains {
+            host
+            id
+            localization {
+              alternateLocales
+              country
+              defaultLocale
+            }
+            sslEnabled
+            url
+          }
+          email
+          myshopifyDomain            
           id
           name
           plan {
@@ -24,17 +50,27 @@ class MerchantInfo implements IMerchantInfo {
             partnerDevelopment
             shopifyPlus
           }
+          timezoneOffset
+          timezoneAbbreviation
+          primaryDomain {
+            host
+            id
+            localization {
+              alternateLocales
+              country
+              defaultLocale
+            }
+            sslEnabled
+            url
+          }
           url
         }
       }
     `;
-    const { data } = await Client.post("/graphql.json", { query });
+    const { data } = await this._client.post("/graphql.json", { query });
     const payload = data.data.shop;
     return payload;
   }
 }
 
-const Shop = new MerchantInfo();
-const getUserShopifyInfo: IMerchantInfo["fetch"] = Shop.fetch.bind(Shop);
-
-export { getUserShopifyInfo };
+export default MerchantInformation;

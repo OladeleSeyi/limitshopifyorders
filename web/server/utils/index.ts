@@ -3,4 +3,5 @@ export {
   validateWebhookRequest,
   getShopifyClient,
   handleShopifyGQLError,
+  validateSession,
 } from "./lib/library";

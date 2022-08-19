@@ -7,4 +7,4 @@ export {
   removeSession,
   getUserAccessToken,
 } from "./modules/sessionsStorage";
-export { getUserShopifyInfo } from "./modules/merchantInfo";
+export { default as MerchantInformation } from "./modules/merchantInfo";

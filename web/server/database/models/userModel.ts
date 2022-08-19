@@ -9,7 +9,27 @@ const userSchema = new Schema({
   name: String,
   deleted: { type: Boolean, default: false },
   updated_at: Date,
-  user_info: Schema.Types.Mixed
+  user_info: new Schema({
+    email: String,
+    checkoutApiSupported: Boolean,
+    currencyCode: String,
+    currencyFormats: {
+      moneyFormat: String,
+      moneyWithCurrencyFormat: String,
+    },
+    customerAccounts: {
+      type: String,
+      enum: ["DISABLED", "OPTIONAL", "REQUIRED"],
+    },
+    id: String,
+    name: String,
+    plan: {
+      displayName: String,
+      partnerDevelopment: Boolean,
+      shopifyPlus: Boolean,
+    },
+    url: String,
+  }),
 });
 
 const User = mongoose.model<IUserModel>("User", userSchema, "users");

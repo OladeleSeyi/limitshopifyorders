@@ -1,3 +1,5 @@
+unfortunately I did not get to complete this. I am experimenting with subscribng to a cart and removing extra items when the cart reaches the desired maximum.
+
 # Shopify App Boilerplate with Node,Typescript,MongoDb & Next.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)

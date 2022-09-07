@@ -12,7 +12,7 @@
     "url": "https://github.com/0x-buidl/shopify-app-boilerplate.git"
   },
   "scripts": {
-    "shopify": "shopify",
+    "shopify": "shopify populate products --count 6",
     "build": "shopify app build",
     "dev": "shopify app dev",
     "info": "shopify app info",

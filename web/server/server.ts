@@ -48,6 +48,7 @@ app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   server.keys = [Shopify.Context.API_SECRET_KEY];
+  console.log(server.keys);
   // ------------ GLOBAL MIDDLEWARES ------------
   server.use(globaErrorHandler);
   server.use(contentSecHeader);

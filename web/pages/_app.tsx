@@ -56,6 +56,9 @@ function MyProvider(props: any) {
   );
 }
 const { publicRuntimeConfig } = getConfig();
+
+let MyContext = React.createContext({});
+MyContext.displayName = "MYCONTEXT";
 class MyApp extends App {
   render() {
     const { Component, pageProps, host } = this.props;
@@ -68,7 +71,14 @@ class MyApp extends App {
             forceRedirect: false,
           }}
         >
-          <MyProvider Component={Component} {...pageProps} />
+          <MyContext.Provider
+            value={{
+              host: host,
+              prop1: { ...pageProps },
+            }}
+          >
+            <MyProvider Component={Component} {...pageProps} />
+          </MyContext.Provider>
         </Provider>
       </AppProvider>
     );
@@ -76,10 +86,10 @@ class MyApp extends App {
 }
 
 MyApp.getInitialProps = async ({ ctx }: AppContext) => {
-  console.log("app", ctx.query.host);
   return {
     host: ctx.query.host,
   };
 };
 
+export { MyContext };
 export default MyApp;

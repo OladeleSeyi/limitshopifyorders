@@ -4,9 +4,9 @@ import { IProductModel } from "../types";
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-  limit: String,
+  limit: Number,
   shopifyId: String,
-  store: String,
+  shop: String,
 });
 
 const Product = mongoose.model<IProductModel>(

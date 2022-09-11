@@ -32,7 +32,7 @@ export interface IWebhookModel {
 export interface IProductModel {
   limit: string;
   shopifyId: string;
-  store: string;
+  shop: string;
 }
 
 export interface IShopModel {

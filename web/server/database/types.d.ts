@@ -1,4 +1,3 @@
-
 export interface ISessionModel {
   id: string;
   payload: {
@@ -28,6 +27,18 @@ export interface IWebhookModel {
   webhook_topic: string;
   payload: any;
   time_received: Date;
+}
+
+export interface IProductModel {
+  limit: string;
+  shopifyId: string;
+  store: string;
+}
+
+export interface IShopModel {
+  name: string;
+  limit: string;
+  shopifyId: string;
 }
 
 export type UserInfo = {

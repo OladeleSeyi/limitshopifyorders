@@ -29,7 +29,6 @@ export const webhookController = async (ctx: Context) => {
         token: payload.token,
       });
 
-      // Make dynamic
       await modifyCartContents(cart, session, payload.token);
     } catch (err) {
       throw err;
@@ -43,7 +42,8 @@ export const webhookController = async (ctx: Context) => {
   ctx.response.status = 200;
 };
 
-// TODO: move utility func to another file
+// TODO: Add checks for replay attack
+// move utility func to another file
 // Promisify: Promise.some/all ?
 const modifyCartContents = async (cart, session, token) => {
   let newLineItems: any[] = [];

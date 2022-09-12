@@ -5,8 +5,7 @@ import { ProductDb } from "../../database";
 export const productController = async (ctx: Context) => {
   //TODO
   // validate input
-  // verify validy of product
-  // register webhook listener
+  // verify validy of product?
   const { body } = ctx.request;
   const { shop, accessToken } = ctx.state.shopify;
   try {

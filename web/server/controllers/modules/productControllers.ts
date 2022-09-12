@@ -5,6 +5,7 @@ export const productController = async (ctx: Context) => {
   //TODO
   // validate input
   // verify validy of product
+  // register webhook listener
   const { body } = ctx.request;
   try {
     await ProductDb.findOneAndUpdate({ shopifyId: body.productId }, body, {

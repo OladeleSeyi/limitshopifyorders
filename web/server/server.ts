@@ -13,7 +13,7 @@ import { storeCallback, loadCallback, deleteCallback } from "./auth";
 import { afterAuth, contentSecHeader } from "./middlewares";
 import { nextApp as app } from "./controllers";
 import { globaErrorHandler } from "./controllers";
-import { webhookRoutes, nextRoutes } from "./routers";
+import { webhookRoutes, nextRoutes, productRoutes } from "./routers";
 
 // ------------ INITIATING APP  ------------
 dotenv.config();
@@ -48,7 +48,6 @@ app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   server.keys = [Shopify.Context.API_SECRET_KEY];
-  console.log(server.keys);
   // ------------ GLOBAL MIDDLEWARES ------------
   server.use(globaErrorHandler);
   server.use(contentSecHeader);
@@ -62,6 +61,7 @@ app.prepare().then(async () => {
 
   // ------------ CUSTOM (API) ROUTES ------------
   server.use(webhookRoutes());
+  server.use(productRoutes());
 
   // ------------ NEXT (MERCHANT UI) ROUTES ------------
   server.use(nextRoutes());

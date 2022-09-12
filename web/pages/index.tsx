@@ -1,51 +1,47 @@
-import React, { useState, useEffect } from "react";
-import { Heading, Page, Button } from "@shopify/polaris";
-import { ResourcePicker } from "@shopify/app-bridge-react";
-import createApp from "@shopify/app-bridge";
-import { Cart } from "@shopify/app-bridge/actions";
-import getConfig from "next/config";
-import { Context } from "@shopify/app-bridge-react";
+import React, { useState } from "react";
+import { Heading, Page } from "@shopify/polaris";
+import {
+  ResourcePicker,
+  useAppBridge,
+  // useFeatureRequest,
+} from "@shopify/app-bridge-react";
+import { getSessionToken } from "@shopify/app-bridge-utils";
 
-const Index = (props) => {
-  let contextType = Context;
+const Index = () => {
+  const app = useAppBridge();
   const [picker, setPicker] = useState(false);
-  const { publicRuntimeConfig } = getConfig();
+  // const cartFeat = useFeatureRequest("Cart", "Fetch");
 
-  const app = createApp({
-    apiKey: publicRuntimeConfig.API_KEY,
-    host: "dHNoZXJvLm15c2hvcGlmeS5jb20vYWRtaW4",
-  });
-
-  let cart = Cart.create(app);
-
-  const handleSelection = (resources) => {
-    setPicker(false);
-    console.log(resources);
-    console.log(cart);
-
-    let lineItemPayload = resources.selection.map((product) => product.id);
-
-    console.log("stuff", contextType);
-
-    cart.dispatch(Cart.Action.ADD_LINE_ITEM, {
-      data: lineItemPayload,
-    });
+  const addLimitForProduct = async (
+    product: any,
+    url: string,
+    token: string
+  ) => {
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          limit: 3, //make dynamic
+          shop: product.vendor,
+        }),
+      });
+    } catch (e) {
+      throw e;
+    }
   };
 
-  app.error(function (data: Error.ErrorAction) {
-    console.info("[client] Error received: ", data);
-  });
-
-  // var unsubscriber = cart.subscribe(Cart.Action.UPDATE, function (payload) {
-  //   console.log("[Client] fetchCart", payload);
-  //   unsubscriber();
-  // });
-
-  useEffect(() => {
-    cart.subscribe(Cart.Action.UPDATE, function (payload) {
-      console.log("[Client] cart update", payload);
+  const handleSelection = async (resources: any) => {
+    setPicker(false);
+    console.log(resources);
+    const token = await getSessionToken(app);
+    resources.selection.map(async (item: any) => {
+      await addLimitForProduct(item, app.localOrigin, token);
     });
-  }, [cart]);
+  };
 
   return (
     <Page
@@ -58,6 +54,9 @@ const Index = (props) => {
       <Heading>
         Shopify APP with mongodb & typescript <span role={"img"}>🎉</span>
       </Heading>
+      {/* <MyContext.Consumer> */}
+      {/* {(value) => <DummyComp value={value} />} */}
+
       <ResourcePicker
         resourceType="Product"
         open={picker}
@@ -66,7 +65,9 @@ const Index = (props) => {
           handleSelection(resources);
         }}
       />
+      {/* </MyContext.Consumer> */}
     </Page>
   );
 };
+
 export default Index;
